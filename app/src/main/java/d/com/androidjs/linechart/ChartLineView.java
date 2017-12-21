@@ -46,6 +46,9 @@ public class ChartLineView extends LinearLayout {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAllowFileAccess(true);//设置可以访问文件
 
+        mWebview.setHorizontalScrollBarEnabled(false);//水平不显示
+        mWebview.setVerticalScrollBarEnabled(false); //垂直不显示
+
 
     }
 
