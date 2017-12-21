@@ -19,7 +19,7 @@
     <d.com.androidjs.linechart.ChartLineView
         android:id="@+id/analyse_report_chart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="239dp"
         android:background="#ffffff" />
 
 
