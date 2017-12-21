@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        html, body {
+            height: 100%;
+            background-color: #fff;
+            color: #fff;
+            font-family: "Microsoft YaHei";
+        }
+    </style>
+</head>
+
+<body>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="width: 100%; height:100%; margin:0px; padding:0px"></div>
+<!-- ECharts单文件引入 -->
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript">
+    //显示图表
+function createChart (lineJson) {
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init (document.getElementById ('main'));
+  var lineJson = lineJson;
+
+  // 指定图表的配置项和数据
+  var option = {
+    tooltip: {
+      trigger: 'axis',
+    },
+    legend: {
+      padding: [3, 4],
+      show: lineJson.showTitle,
+      icon: 'rect',
+      itemWidth: 15,
+      itemHeight: 4,
+      selectedMode: false,
+      data: [],
+      orient: 'horizontal',
+    },
+    grid: {
+      top: '45px',
+      left: '5px',
+      right: '5px',
+      bottom: '12px',
+      containLabel: true
+    },
+
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: true,
+        axisLine: {
+          lineStyle: {
+            color: '#ccc',
+          }
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: true,
+          rotate: '0',
+          textStyle: {
+            color: '#666666',
+          }
+        },
+        //动态展示X
+        data: lineJson.xAxis,
+      }
+    ],
+    yAxis: [
+      {
+        nameLocation: 'end',
+        nameGap: 20,
+        name: lineJson.unit,
+        type: 'value',
+        axisLine: {
+          show: false,
+          lineStyle: {
+            color: '#ccc',
+          }
+        },
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: '#eee',
+          }
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          formatter: needFormat,
+          show: true,
+          textStyle: {
+            color: '#666666',
+          }
+        },
+      }
+    ],
+    series: []
+  };
+
+
+  var data = lineJson.series;
+  for (var i = 0; i < data.length; i ++) {
+    var rows = data[i];
+    console.log (rows);
+    option.legend.data.push ({
+      name: rows.name,
+    });
+    option.series.push ({
+      name: rows.name,
+      type: 'line',
+      symbol: 'circle',
+      symbolSize: '5',
+      data: rows.data,
+      itemStyle: {
+        normal: {
+          color: rows.color,
+          areaStyle: {
+            color: rows.shadowcolor,
+          },
+        },
+      }
+    })
+  }
+  function needFormat (value, index) {
+    if (lineJson.needFormat) {
+      return value / 10000;
+    } else {
+      return value;
+    }
+
+
+  }
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption (option);
+}
+
+
+
+
+</script>
+</body>
+</html>
