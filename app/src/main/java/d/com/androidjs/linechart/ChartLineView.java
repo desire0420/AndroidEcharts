@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -60,16 +61,21 @@ public class ChartLineView extends LinearLayout {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                Log.w("webview", "shouldOverrideUrlLoading");
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                Log.w("webview", "onPageStarted");
+
                 super.onPageStarted(view, url, favicon);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                Log.w("webview", "onPageFinished");
+
                 mWebview.loadUrl(jsPre);
             }
         });

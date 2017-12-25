@@ -30,7 +30,7 @@ public class EchartBean {
         //对数据封装处理
         JSONArray xAxis = new JSONArray(); //保存数组数据的JSONArray对象
         JSONArray yAxis = new JSONArray();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 80; i++) {
             yAxis.put(i * i);
             xAxis.put(i);
         }
