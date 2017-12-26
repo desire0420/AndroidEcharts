@@ -1,20 +1,66 @@
 package d.com.androidjs;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import d.com.androidjs.linechart.ChartLineView;
-import d.com.androidjs.linechart.EchartBean;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ChartLineView analyse_report_chart;
+    TabLayout mTabLayout;
+    ViewPager mViewPager;
+    ViewPagerAdapter mAdapter;
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        analyse_report_chart = findViewById(R.id.analyse_report_chart);
-        //折线图
-        analyse_report_chart.createLineChart(EchartBean.getInstance().getAnalyseBusines());
+        findViews();
+    }
+
+    private void findViews() {
+        mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mFragmentList.add(new OneFragment());
+        mFragmentList.add(new TwoFragment());
+        mFragmentList.add(new ThreeFragment());
+        mFragmentTitleList.add("第一个");
+        mFragmentTitleList.add("第二个");
+        mFragmentTitleList.add("第三个");
+        mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(1);
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Log.w("TAG","---------"+position);
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

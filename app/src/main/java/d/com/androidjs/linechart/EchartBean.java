@@ -26,12 +26,79 @@ public class EchartBean {
     }
 
     //数据
-    public JSONObject getAnalyseBusines() {
+    public JSONObject getOne() {
         //对数据封装处理
         JSONArray xAxis = new JSONArray(); //保存数组数据的JSONArray对象
         JSONArray yAxis = new JSONArray();
-        for (int i = 0; i < 80; i++) {
+        for (int i = 0; i <7; i++) {
+            yAxis.put(i);
+            xAxis.put(i);
+        }
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", "one");
+            json.put("color", "#4984EF");
+            json.put("shadowcolor", "rgba(74,129,236,0.1)");
+            json.put("data", yAxis);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray series = new JSONArray();
+        series.put(json);
+        JSONObject result = new JSONObject();
+        try {
+            result.put("unit", "单位(元)");
+            result.put("needFormat", false);
+            result.put("showTitle", true);
+            result.put("xAxis", xAxis);
+            result.put("series", series);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.w("chart", "--" + result);
+        return result;
+    }
+
+    //数据
+    public JSONObject getTwo() {
+        //对数据封装处理
+        JSONArray xAxis = new JSONArray(); //保存数组数据的JSONArray对象
+        JSONArray yAxis = new JSONArray();
+        for (int i = 0; i < 7; i++) {
             yAxis.put(i * i);
+            xAxis.put(i);
+        }
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", "two");
+            json.put("color", "#dd3434");
+            json.put("shadowcolor", "rgba(74,129,236,0.1)");
+            json.put("data", yAxis);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray series = new JSONArray();
+        series.put(json);
+        JSONObject result = new JSONObject();
+        try {
+            result.put("unit", "单位(元)");
+            result.put("needFormat", false);
+            result.put("showTitle", true);
+            result.put("xAxis", xAxis);
+            result.put("series", series);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.w("chart", "--" + result);
+        return result;
+    }
+    //数据
+    public JSONObject getThree() {
+        //对数据封装处理
+        JSONArray xAxis = new JSONArray(); //保存数组数据的JSONArray对象
+        JSONArray yAxis = new JSONArray();
+        for (int i = 0; i < 7; i++) {
+            yAxis.put(i * i*i);
             xAxis.put(i);
         }
         JSONObject json = new JSONObject();
@@ -58,6 +125,4 @@ public class EchartBean {
         Log.w("chart", "--" + result);
         return result;
     }
-
-
 }
