@@ -1,5 +1,6 @@
 package d.com.androidjs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,11 +9,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import d.com.androidjs.jsbridge.JSBridgeActivity;
+
 public class MainActivity extends AppCompatActivity {
+    Button jsbridge;
     TabLayout mTabLayout;
     ViewPager mViewPager;
     ViewPagerAdapter mAdapter;
@@ -24,9 +30,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
+        setListener();
+    }
+
+    private void setListener() {
+        jsbridge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, JSBridgeActivity.class));
+            }
+        });
     }
 
     private void findViews() {
+        jsbridge = findViewById(R.id.jsbridge);
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mFragmentList.add(new OneFragment());
@@ -49,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.w("TAG","---------"+position);
+            Log.w("TAG", "---------" + position);
             return mFragmentList.get(position);
         }
 

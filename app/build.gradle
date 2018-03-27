@@ -27,4 +27,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     implementation 'com.android.support:design:26.0.0'
     implementation 'com.android.support:recyclerview-v7:26.0.0'
+    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    compile 'com.google.code.gson:gson:2.7'
+
 }
