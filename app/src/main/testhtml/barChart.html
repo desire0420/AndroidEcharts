@@ -1,0 +1,220 @@
+<!-- 柱状图 -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" class="container"></div>
+
+<!-- 引入 echarts.js -->
+<script src='../js/echarts.min.js'></script>
+<script type="text/javascript">
+    var option;
+    var myChart;
+
+
+    loadEcharts(chartData());
+
+    //初始化echartView
+    function initEchartView() {
+        myChart = echarts.init(document.getElementById('main'));
+    }
+
+
+    // 刷新echartView，更新数据源
+    function refreshWithOption(echartJson) {
+        resetOption(echartJson)
+        myChart.setOption(option, false, false, false);
+    }
+
+
+    // load echart with data
+    function loadEcharts(echartJson) {
+        initEchartView()
+        resetOption(echartJson)
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    function resetOption(echartJson) {
+        // 指定图表的配置项和数据
+        option = {
+            // 显示标题设置
+            title: {
+                top: '2%',
+                left: '2%',
+                text: echartJson.title,
+                subtext: echartJson.subTitle,
+                textStyle: {
+                    color: '#333333',
+                    fontSize: 18,
+
+                }
+            },
+            /**
+             提示框设置
+             可以设置在全局，即 tooltip
+             可以设置在坐标系中，即 grid.tooltip、polar.tooltip、single.tooltip
+             可以设置在系列中，即 series.tooltip
+             可以设置在系列的每个数据项中，即 series.data.tooltip
+             */
+            tooltip: {
+                trigger: 'axis',
+                triggerOn: 'mousemove|click',
+                show: true,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                borderWidth: 0,
+                padding: 5,
+                textStyle: {
+                    color: '#ffffff',
+                    fontSize: 12,
+                },
+                //坐标轴指示器 设置
+                axisPointer: {
+                    type: 'line',
+                    axis: 'auto',
+                    lineStyle: {
+                        color: '#999999'
+                    },
+                    label: {
+                        show: false,
+                    }
+                },
+            },
+            // 图例设置
+            legend: {
+                top: '10%',
+                show: echartJson.showLegend,
+                itemWidth: 20,
+                itemHeight: 8,
+                selectedMode: false,
+                data: [],
+                orient: 'horizontal',
+                textStyle: {
+                    color: '#999999',
+                    fontSize: 12,
+                    lineHeight: 20,
+                }
+            },
+            //坐标轴的网格样式设置
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '5%',
+                top: '20%',
+                containLabel: true
+            },
+
+            //设置x轴属性
+            xAxis: [{
+                type: 'category',
+                boundaryGap: true,
+                //设置x轴样式
+                axisLine: {
+                    lineStyle: {
+                        color: '#666666',
+                    }
+                },
+                //设置x轴标签刻度
+                axisTick: {
+                    show: true,
+                },
+                //设置x轴显示标签样式
+                axisLabel: {
+                    show: true,
+                    rotate: '0',
+                    color: '#333333',
+                    formatter: '{value}',
+
+                },
+                //动态展示X
+                data: echartJson.xAxis,
+            }],
+            // 设置y轴属性
+            yAxis: [{
+                //设置y轴的标题
+                name: echartJson.yAxisTitle,
+                type: 'value',
+                axisLine: {
+                    //设置y轴是否显示
+                    show: true,
+                    lineStyle: {
+                        color: '#999999',
+                    }
+                },
+                splitLine: {
+                    //设置纵坐标 线的样式
+                    show: true,
+                    lineStyle: {
+                        color: '#eeeeee',
+                    }
+                },
+                axisTick: {
+                    // 设置是否显示坐标轴刻度
+                    show: true,
+                },
+                //坐标轴刻度标签的相关设置。
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#333333',
+                    },
+                    formatter: '{value}',
+                },
+            }],
+            series: []
+        };
+
+        // 数据填充
+        var data = echartJson.series;
+        for (var i = 0; i < data.length; i++) {
+            var rows = data[i];
+            option.legend.data.push({
+                "name": rows.name,
+            })
+        }
+        option.series = echartJson.series;
+    }
+
+    // demo数据
+    function chartData() {
+        var lineJson = {
+            "showLegend": true,
+            "title": "营收账单",
+            "subTitle": "",
+            "yAxisTitle": '金额',
+            "xAxis": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+
+            "series": [{
+                "type": 'bar',
+                "name": "开单金额",
+                "itemStyle": {
+                    "color": "#4984EF",
+                },
+                "data": [16, 12, 2, 10, 4, 5, 23, 2, 10, 4, 5, 8]
+            }]
+        };
+        return lineJson;
+    }
+</script>
+</body>
+
+</html>

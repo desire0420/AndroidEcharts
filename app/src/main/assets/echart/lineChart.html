@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" class="container"></div>
+<!-- ECharts单文件引入 -->
+<script src='../js/echarts.min.js'></script>
+<script type="text/javascript">
+  //显示图表
+function createChart (lineJson) {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var defaultTextColor = "#666666";
+    var defaultBgLineColor = "#eee";
+    var defaultTextSize = 13;
+
+    var lineJson = {
+        "titleName": "",
+        "showLegend": true,
+        "showYAxis": true,
+        "yUnit": "y单位",
+        "textColor": "#666666",
+        "textSize": "13",
+        "bgLineColor": "#eee",
+        "showTooltip": true,
+        "xAxis": ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        "series": [
+            {
+                "legendName": "第一条",
+                "lineColor": "#dd3434",
+                "shadowColor": "rgba(0,0,0,0)",
+                "symbol": "circle",
+                "data": [0, 1, 2, 7, 4, 5, 9]
+            }, {
+                "legendName": "第二条",
+                "symbol": "circle",
+                "lineColor": "#4984EF",
+                "shadowColor": "rgba(0,0,0,0)",
+                "data": [0, 4, 3, 6, 4, 4, 2]
+            }
+        ]
+    };
+
+    // 指定图表的配置项和数据
+    var option = {
+            title: {
+                padding: 5,
+                show: showTitle(lineJson.titleName),
+                text: lineJson.titleName,
+                textStyle: {
+                    color: lineJson.textColor || defaultTextColor,
+                    fontSize: lineJson.textSize || defaultTextSize,
+                }
+            },
+            legend: {
+                padding: [3, 4],
+                show: lineJson.showLegend,
+                icon: 'rect',
+                itemWidth: 6,
+                itemHeight: 4,
+                selectedMode: false,
+                data: [],
+                orient: 'horizontal',
+            },
+
+            tooltip: {
+                hideDelay: 500,
+                trigger: 'axis',
+                show: lineJson.showTooltip || true,
+            },
+
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+
+            xAxis: [
+                {
+                    show: true,
+                    axisLine:
+                        {
+                            lineStyle: {
+                                color: lineJson.bgLineColor || defaultBgLineColor,
+                            }
+                        },
+
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle:
+                            {
+                                color: lineJson.textColor || defaultTextColor,
+                            }
+                    }
+                    ,
+                    //动态展示X
+                    data: lineJson.xAxis,
+                }
+            ],
+
+            yAxis: [
+                {
+                    show: true,
+                    nameGap: 20,
+                    name: lineJson.yUnit,
+                    nameTextStyle: {
+                        color: lineJson.textColor || defaultTextColor,
+                    },
+                    axisLine: {
+                        show: lineJson.showYAxis, //是否显示Y轴线
+                        lineStyle: {
+                            color: lineJson.bgLineColor || defaultBgLineColor,
+                        }
+                    },
+                    splitLine: { //是否显示分割线
+                        show: true,
+                        lineStyle: {
+                            color: lineJson.bgLineColor || defaultBgLineColor,
+                        }
+                    },
+                    axisTick: {
+                        show: false, //是否显示刻度
+                    },
+                    axisLabel: {//是否显示Y轴文字
+                        show: true,
+                        textStyle: {
+                            color: lineJson.textColor || defaultTextColor,
+                        }
+                    },
+                }
+            ],
+
+            series:
+                []
+        }
+    ;
+
+    var data = lineJson.series;
+    for (var i = 0; i < data.length; i++) {
+        var rows = data[i];
+        console.log(rows);
+        option.legend.data.push({
+            name: rows.legendName,
+        });
+        console.log(option.legend.data);
+        option.series.push({
+            name: rows.legendName,
+            type: 'line',
+            symbol: rows.symbol || 'emptyCircle',
+            symbolSize: '5',
+            data: rows.data,
+            itemStyle: {
+                normal: {
+                    color: rows.lineColor,
+                    areaStyle: {
+                        color: rows.shadowColor,
+                    },
+                },
+            }
+        })
+    }
+
+    function showTitle(titleName) {
+        if (titleName === null || "" === titleName) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+}
+
+
+
+</script>
+</body>
+</html>

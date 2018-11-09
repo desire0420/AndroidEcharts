@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" class="container"></div>
+<!-- ECharts单文件引入 -->
+<script src='../js/echarts.min.js'></script>
+<script type="text/javascript">
+    var option;
+    var myChart;
+
+    //初始化echartView
+    function initEchartView() {
+        myChart = echarts.init(document.getElementById('main'));
+    }
+
+    //设置option指定图表的配置项和数据
+    function resetOption(optionJson) {
+        option = optionJson;
+    }
+
+    // 加载Echart图形
+    function loadEcharts(optionJson) {
+        initEchartView();
+        resetOption(optionJson);
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    // 刷新echartView，更新数据源
+    function refreshWithOption(optionJson) {
+        resetOption(optionJson)
+        myChart.setOption(option, false, false, false);
+    }
+
+
+</script>
+</body>
+</html>

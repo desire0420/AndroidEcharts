@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.dianping.chart.activites.TestChartActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     ViewPagerAdapter mAdapter;
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
+
+
+    Button line, pre, chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +45,33 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, JSBridgeActivity.class));
             }
         });
+        line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LineActivity.class));
+
+            }
+        });
+        pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PieActivity.class));
+
+            }
+        });
+        chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TestChartActivity.class));
+
+            }
+        });
     }
 
     private void findViews() {
+        chart = findViewById(R.id.chart);
+        line = findViewById(R.id.line);
+        pre = findViewById(R.id.pre);
         jsbridge = findViewById(R.id.jsbridge);
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);

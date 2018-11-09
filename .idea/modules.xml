@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidEcharts.iml" filepath="$PROJECT_DIR$/AndroidEcharts.iml" />
       <module fileurl="file://$PROJECT_DIR$/AndroidJs.iml" filepath="$PROJECT_DIR$/AndroidJs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-chart/android-chart.iml" filepath="$PROJECT_DIR$/android-chart/android-chart.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

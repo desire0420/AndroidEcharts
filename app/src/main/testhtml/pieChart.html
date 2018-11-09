@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" class="container"></div>
+
+<!-- 引入 echarts.js -->
+<script src='../js/echarts.min.js'></script>
+<script type="text/javascript">
+
+    var option;
+    var myChart;
+
+    //仅供网页测试，实际使用请注释
+    loadEcharts(chartData());
+
+    //初始化echartView
+    function initEchartView() {
+        myChart = echarts.init(document.getElementById('main'));
+    }
+
+    //设置option  指定图表的配置项和数据
+    function resetOption(echartJson) {
+        option = echartJson;
+
+    }
+
+    // 加载Echart图形
+    function loadEcharts(echartJson) {
+        initEchartView();
+        resetOption(echartJson);
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    // 刷新echartView，更新数据源
+    function refreshWithOption(echartJson) {
+        resetOption(echartJson)
+        myChart.setOption(option, false, false, false);
+    }
+
+    function isEmpty(str) {
+        return !(str === null || "" === str);
+    }
+
+    // demo数据
+    function chartData() {
+        var pieJson = {
+            title: {
+                top: '2%',
+                left: '2%',
+                show: true,
+                text: "title",
+                subtext: "subTitle",
+
+            },
+
+            tooltip: {
+                trigger: 'item',
+            },
+            legend: {
+                top: '4%',
+                icon: "rect",
+                itemWidth: 18,
+                itemHeight: 12,
+                selectedMode: false,
+                show: true,
+                orient: "horizontal",
+
+            },
+
+
+            series: [{
+                name: "ww",
+                label: {
+                    show: true,
+                },
+
+                type: 'pie',
+                radius: ["30%", "50%"],
+                center: ["50%", "50%"],
+                data:
+                    [
+                        {
+                            value: 335, name: '直接访问', itemStyle: {
+                                color: "#eee"
+                            }
+                        },
+                        {value: 310, name: '邮件营销'},
+                        {value: 234, name: '联盟广告'},
+                        {value: 135, name: '视频广告'},
+                        {value: 1548, name: '搜索引擎'}
+                    ]
+            }],
+        };
+        return pieJson;
+    }
+
+
+</script>
+</body>
+</html>

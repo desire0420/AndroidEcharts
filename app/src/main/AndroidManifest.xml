@@ -18,6 +18,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".jsbridge.JSBridgeActivity" />
+        <activity android:name=".LineActivity" />
+
+        <activity android:name=".PieActivity" />
+
     </application>
 
 </manifest>

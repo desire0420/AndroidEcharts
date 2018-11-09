@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" class="container"></div>
+<!-- ECharts单文件引入 -->
+<script src='../js/echarts.min.js'></script>
+<script type="text/javascript">
+    var defaultTextColor = "#666666";
+    var defaultBgLineColor = "#eee";
+    var option;
+    var myChart;
+
+    //仅供网页测试，实际使用请注释
+    loadEcharts(chartData());
+
+    //初始化echartView
+    function initEchartView() {
+        myChart = echarts.init(document.getElementById('main'));
+    }
+
+    //设置option指定图表的配置项和数据
+    function resetOption(echartJson) {
+        option = echartJson;
+    }
+
+    // 加载Echart图形
+    function loadEcharts(echartJson) {
+        initEchartView();
+        resetOption(echartJson);
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    // 刷新echartView，更新数据源
+    function refreshWithOption(echartJson) {
+        resetOption(echartJson)
+        myChart.setOption(option, false, false, false);
+    }
+
+
+    function isEmpty(str) {
+        return !(str === null || "" === str);
+    }
+
+    // demo数据
+    function chartData() {
+
+        var option = {
+            title: {
+                top: 2,
+                left: '2%',
+                show: true,
+                text: "标题",
+
+                subtext: "副标题",
+            },
+            legend: {
+                top: '2%',
+                padding: [3, 4],
+                show: true,
+                icon: 'rect',
+                itemWidth: 6,
+                itemHeight: 4,
+                selectedMode: false,
+                data: ["第一条", "第二条"],
+                orient: 'horizontal',
+            },
+
+            tooltip: {
+                hideDelay: 100,
+                trigger: 'axis',
+            },
+
+            grid: {
+                left: 18,
+                right: 18,
+                bottom: 12,
+                top:100,
+                containLabel: true,//坐标轴两边留白策略
+            },
+
+            xAxis: [{
+                boundaryGap: false,//
+                show: true,
+
+                axisLine: {
+                    lineStyle: {
+                        color: defaultBgLineColor,
+                    }
+                },
+                axisLabel: {//是否显示X轴文字
+                    show: true,
+                    color: defaultTextColor,
+                },
+
+                axisTick: {
+                    show: true,
+                },
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            }],
+
+            yAxis: [{
+                show: true,
+                name: "y轴单位",
+                nameTextStyle: {
+                    color: defaultTextColor,
+                },
+
+                axisLine: {
+                    show: true, //是否显示Y轴坐标
+                    lineStyle: {
+                        color: defaultBgLineColor,
+                    }
+                },
+                splitLine: { //是否显示Y轴水平方向线
+                    show: true,
+                    lineStyle: {
+                        color: defaultBgLineColor,
+                    }
+                },
+                axisTick: {
+                    show: true, //是否显示刻度
+                },
+
+                axisLabel: {//是否显示Y轴文字
+                    show: true,
+                    color: defaultTextColor,
+                },
+            }],
+            series: [
+                {
+                    name: "第一条",
+                    type: 'line',
+                    symbol: "circle",
+                    symbolSize: '5',
+                    data: [2, 1, 5, 7, 1, 5, 14],
+                    itemStyle: {
+                        color: "#dd3434",
+                    },
+                    areaStyle: {
+                        color: "rgba(0,0,0,0)",
+                    }
+                },
+
+                {
+                    name: "第二条",
+                    type: 'line',
+                    symbol: "circle",
+                    symbolSize: '5',
+                    data: [0, 1, 2, 7, 4, 5, 9],
+                    itemStyle: {
+                        color: "#4984EF",
+                    },
+                    areaStyle: {
+                        color: "rgba(74,129,236,0.1)",
+                    }
+                }
+            ]
+        };
+        return option;
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" class="container"></div>
+
+<!-- 引入 echarts.js -->
+<script src='../js/echarts.min.js'></script>
+<script type="text/javascript">
+  //显示图表
+function createChart (lineJson) {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var defaultTextColor = "#666666";
+    var defaultTextSize = 12;
+    var pieJson = {
+            "titleName": "标题",
+            "textColor": "#666666",
+            "textSize": "12",
+            "showLegend": true,
+            "legendOrient": "horizontal",
+            "legendPosition": "center",
+            "outsideLabel": true,
+            "showTooltip": false,
+            "radius": '50%',
+            data:
+                [
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 234, name: '联盟广告'},
+                    {value: 135, name: '视频广告'},
+                    {value: 1548, name: '搜索引擎'}
+                ]
+        }
+    ;
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            show: showTitle(pieJson.titleName),
+            text: pieJson.titleName,
+            x: 'center',
+            textStyle: {
+                color: pieJson.textColor || defaultTextColor,
+                fontSize: pieJson.textSize || defaultTextSize,
+            }
+
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            top: showTitle(pieJson.titleName) ? 25 : 0,
+            itemWidth: 18,
+            itemHeight: 12,
+            selectedMode: false,
+            show: pieJson.showLegend || true,
+            orient: pieJson.legendOrient,
+            left: pieJson.legendPosition,
+            textStyle: {
+                color: pieJson.textColor || defaultTextColor,
+                fontSize: pieJson.textSize || defaultTextSize,
+            }
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: pieJson.radius || '50%',
+                center: ['50%', '50%'],
+                data: pieJson.data,
+                label: {
+                    show: pieJson.outsideLabel || true,
+                    position: 'outside',
+                    color: pieJson.textColor || defaultTextColor,
+                    fontSize: pieJson.textSize || defaultTextSize,
+
+                },
+            }
+        ]
+    };
+
+    function showTitle(titleName) {
+        if (titleName === null || "" === titleName) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+}
+
+
+
+</script>
+</body>
+</html>
